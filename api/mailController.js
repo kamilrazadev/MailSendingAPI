@@ -3,20 +3,21 @@ import { config } from "dotenv";
 config();
 
 export const handleSendMail = (req, res) => {
-  const data = {
-    gameTitle: "My Game",
-    about: "This is my game",
-    isGameLiveOnStore: "Yes",
-    isGameTested: "No",
-    noOfTeams: 5,
-    gameExperience: 2,
-    gameExperties: "Yes",
-    email: "example@gmail.com",
-    phone: "0312-3456789",
-    address: "Karachi, Pakistan",
-    url: "not provided",
-    comments: "this is a comment",
-  };
+  const {
+    gameTitle,
+    about,
+    isGameLive,
+    isGameTested,
+    noOfTeams,
+    gameExperience,
+    gameExperties,
+    newsletterSubscription,
+    email,
+    phone,
+    address,
+    url,
+    comment,
+  } = req.body;
 
   // Send Email
   const transporter = nodemailer.createTransport({
@@ -28,9 +29,9 @@ export const handleSendMail = (req, res) => {
   });
 
   const mailOptions = {
-    from: { name: "SOL", address: process.env.EMAIL },
-    to: "ammarali02062003@gmail.com",
-    subject: "SOL Account OTP",
+    from: { name: "Game Changer", address: process.env.EMAIL },
+    to: "kamilraza.amg@gmail.com",
+    subject: "Game Changer Record",
     html: `
     <!DOCTYPE html>
     <html lang="en">
@@ -81,62 +82,67 @@ margin-bottom: 14px
 <div class="fields-container">
 <div class="field">
 <h4>Game Title:</h4>
-<p>asd</p>
+<p>${gameTitle}</p>
 </div>
 
 <div class="field">
 <h4>About:</h4>
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+<p>${about}</p>
 </div>
 
 <div class="field">
 <h4>Game live on play store:</h4>
-<p>Yes</p>
+<p>${isGameLive}</p>
 </div>
 
 <div class="field">
 <h4>Game is tested:</h4>
-<p>No</p>
+<p>${isGameTested}</p>
 </div>
 
 <div class="field">
 <h4>No of Teams:</h4>
-<p>5</p>
+<p>${noOfTeams}</p>
 </div>
 
 <div class="field">
 <h4>Game Experience:</h4>
-<p>3 years</p>
+<p>${gameExperience} years</p>
 </div>
 
 <div class="field">
 <h4>Game Experties:</h4>
-<p>Yes</p>
+<p>${gameExperties}</p>
+</div>
+
+<div class="field">
+<h4>Newsletter Subscription:</h4>
+<p>${newsletterSubscription}</p>
 </div>
 
 <div class="field">
 <h4>Email:</h4>
-<p>example@gmail.com</p>
+<p>${email}</p>
 </div>
 
 <div class="field">
 <h4>Phone:</h4>
-<p>0312-3456789</p>
+<p>${phone}</p>
 </div>
 
 <div class="field">
 <h4>Address:</h4>
-<p>Karachi, Pakistan</p>
+<p>${address}</p>
 </div>
 
 <div class="field">
 <h4>URL:</h4>
-<p>not provided</p>
+<p>${url}</p>
 </div>
 
 <div class="field">
 <h4>Comment:</h4>
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+<p>${comment}</p>
 </div>
 
 </div>
@@ -149,6 +155,7 @@ margin-bottom: 14px
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
+      console.log(error.message);
       return res.status(200).json({
         status: false,
         message: "otpError",

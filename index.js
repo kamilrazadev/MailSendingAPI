@@ -12,6 +12,10 @@ app.use(cors());
 
 app.use("/api/mail", mailRouter);
 
+app.get("/", (req, res) => {
+  res.send("API Running");
+});
+
 app.listen(port, () => {
   console.log(`App is listening on port ${port}`);
 });
