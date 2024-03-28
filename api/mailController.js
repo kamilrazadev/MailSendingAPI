@@ -30,7 +30,7 @@ export const handleSendMail = (req, res) => {
 
   const mailOptions = {
     from: { name: "Game Changer", address: process.env.EMAIL },
-    to: "kamilraza.amg@gmail.com",
+    to: "reciever-email", //enter reciever email here
     subject: "Game Changer Record",
     html: `
     <!DOCTYPE html>
